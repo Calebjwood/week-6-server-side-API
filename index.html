@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather tracker</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" 
+    rel="stylesheet" 
+    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" 
+    crossorigin="anonymous">
+    <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+
+<body>
+
+    <header class="row bg-primary text-center" >
+        <h1  class="col-12 lh-lg text-light">Weather Dashboard</h1>
+    </header>
+
+    <div class="row">
+
+        <aside id="citySearch" class="col-3">
+            <h1>Search for a City:</h1>
+            <div>
+                <form>
+                    <input type="text" id="SearchName" name="SearchName">
+                    <button id="searchBtn">Search</button>
+                </form>
+                <div id="searchedCities">
+                    <ul></ul>
+                </div>
+            </div>
+        </aside>
+
+        <main class="col-9">
+            <Div id="cityTemp" class="border">
+                <h1 id="cityName"></h1>
+                    <h3 id="temp"></h3>
+                    <h3 id="windSpeed"></h3>
+                    <h3 id="humidity"></h3>
+            </Div>
+            <div id="fiveDay" class="row">
+                <h2>5-Day Forecast:</h2>
+                <div id="dayOneForecast" class="col-2">
+                    <h2 id="dayOneDate"></h2>
+                    <h2 id="dayOneImg"></h2>
+                    <h2 id="dayOneTemp"></h2>
+                    <h2 id="dayOneWind"></h2>
+                    <h2 id="dayOneHum"></h2>
+                </div>
+                <div id="dayTwoForecast"class="col-2">
+                    <h2 id="dayTwoDate"></h2>
+                    <h2 id="dayTwoImg"></h2>
+                    <h2 id="dayTwoTemp"></h2>
+                    <h2 id="dayTwoWind"></h2>
+                    <h2 id="dayTwoHum"></h2>
+                </div>
+                <div id="dayThreeForecast"class="col-2">
+                    <h2 id="dayThreeDate"></h2>
+                    <h2 id="dayThreeImg"></h2>
+                    <h2 id="dayThreeTemp"></h2>
+                    <h2 id="dayThreeWind"></h2>
+                    <h2 id="dayThreeHum"></h2>
+                </div>
+                <div id="dayFourForecast"class="col-2">
+                    <h2 id="dayFourDate"></h2>
+                    <h2 id="dayFourImg"></h2>
+                    <h2 id="dayFourTemp"></h2>
+                    <h2 id="dayFourWind"></h2>
+                    <h2 id="dayFourHum"></h2>
+                </div>
+                <div id="dayFiveForecast"class="col-2">
+                    <h2 id="dayFiveDate"></h2>
+                    <h2 id="dayFiveImg"></h2>
+                    <h2 id="dayFiveTemp"></h2>
+                    <h2 id="dayFiveWind"></h2>
+                    <h2 id="dayFiveHum"></h2>
+                </div>
+
+            </div>
+
+        </main>
+    
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js" 
+    integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" 
+    crossorigin="anonymous">
+    </script>
+    <script src="./assets/js/script.js"></script>
+</body>
+</html>
