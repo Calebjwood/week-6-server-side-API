@@ -1,8 +1,9 @@
 
 var apiKey = "378bdbcbb142e494e5c5c4d984a9387a"
-var apiKeyFiveCast = "5abc145c3e20ec5ed71fe78f2e888c32"
+var apiKeyFiveCast = "584d0571c4b8375819703f678314b9a7"
 
 var citySearch = $("#citySearch")
+
 
 var searchBtn = $("#searchBtn")
 var searchedCities = $("#searchedCities")
@@ -60,6 +61,7 @@ fetch(locUrl)
             console.error("something went wrong")
             return
         }
+        
     return response.json();
     })
     .then(function(locRes){
@@ -68,8 +70,7 @@ fetch(locUrl)
         var locLat = locRes.coord.lat
         console.log(locLat) 
         console.log(locLon)
-        // 32.76
-        // -96.78
+       
         
         if(!locRes){
             cityName[0].innerHTML = "";
@@ -85,22 +86,34 @@ fetch(locUrl)
             humidity[0].textContent = locRes.main.humidity
         }
         
-        apiFiveDay()
+        apiFiveDay(locLat, locLon)
     }) 
   
 }
 
-function apiFiveDay(){
-    var fiveCast =  + apiKeyFiveCast
+function apiFiveDay(locLat, locLon){
+    var fiveCast = "https://api.openweathermap.org/data/2.5/forecast?lat=" + locLat + "&lon=" + locLon + "&appid=" + apiKeyFiveCast + "&units=imperial"
         console.log(fiveCast)
+       
+       
         fetch(fiveCast)
             .then(function(response){
                 console.log(response)
                 return response.json()
             })
             .then(function(fiveRes){
-                console.log(fiveRes)
-            })
+
+
+            for(var i = dayInt; i < daySix; i++){   
+              var forecastDate = year + "-" + month + "-" + i + " 12:00:00"   
+
+                for(var i = 0; i < fiveRes.list.length; i++){
+                    if(fiveRes.list[i].dt_txt === forecastDate){
+                        console.log(fiveRes.list[i].main)
+                    }
+                    console.log(forecastDate)
+                }
+            }})
        
 }
 
@@ -117,6 +130,19 @@ if(!searchNameVal){
 
 apiSearch(searchNameVal)
 }
+
+var year = dayjs().format("YYYY")
+var month = dayjs().format("MM")
+var day = dayjs().format("DD")
+var dayInt= parseInt(day) + 1
+var daySix =  parseInt(day) + 6
+
+
+    
+  
+
+
+
 
 
 searchBtn.on('submit', weatherSearch)
