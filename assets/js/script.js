@@ -7,6 +7,7 @@ var citySearch = $("#citySearch")
 
 var searchBtn = $("#searchBtn")
 var searchedCities = $("#searchedCities")
+var cityList = $("#cityList")
 
 var selectedCity = $("#selectedCity")
 var cityName = $("#cityName")
@@ -60,9 +61,15 @@ fetch(locUrl)
     .then(function(response){
         if (!response.ok){
             console.error("something went wrong")
+            cityName[0].innerHTML = "";
+            temp[0].innerHTML = "";
+            windSpeed[0].innerHTML = '';
+            humidity[0].innerHTML = '';
+            cityName[0].textContent = 'Please enter a valid city'
+            fiveDay.attr("class", "d-none")
             return
         }
-        
+    
     return response.json();
     })
     .then(function(locRes){
@@ -72,20 +79,14 @@ fetch(locUrl)
         
        
         
-        if(!locRes){
-            cityName[0].innerHTML = "";
-            temp[0].innerHTML = "";
-            windSpeed[0].innerHTML = '';
-            humidity[0].innerHTML = '';
-            cityName[0].textContent = 'Please enter a valid city'
-            
-        }else{
-            cityName[0].textContent = locRes.name
+        if(locRes){
+           cityName[0].textContent = locRes.name
             temp[0].textContent = locRes.main.temp
             windSpeed[0].textContent = locRes.wind.speed
             humidity[0].textContent = locRes.main.humidity
+            
         }
-        
+            
         apiFiveDay(locLat, locLon)
     }) 
   
@@ -94,20 +95,20 @@ fetch(locUrl)
 function apiFiveDay(locLat, locLon){
     var fiveCast = "https://api.openweathermap.org/data/2.5/forecast?lat=" + locLat + "&lon=" + locLon + "&appid=" + apiKeyFiveCast + "&units=imperial"
         
+        fiveDay.attr("class", "row")
        
        
         fetch(fiveCast)
             .then(function(response){
+                   
                     return response.json()                              
             })
             .then(function(fiveRes){
-                console.log(fiveRes)
                 forecastArray = []
                 for(var i = 0; i < fiveRes.list.length; i = i + 8){
                     forecastArray.push(fiveRes.list[i])
                 }
 
-                console.log(forecastArray)
                 dayOneDate[0].childNodes[0].data = forecastArray[0].dt_txt.split(" ").splice(0, 1)
                 dayOneImg[0].src = "https://openweathermap.org/img/wn/"+ forecastArray[0].weather[0].icon + "@2x.png"
                 dayOneTemp[0].childNodes[0].data = "Temp: " + forecastArray[0].main.temp
@@ -144,8 +145,14 @@ function apiFiveDay(locLat, locLon){
 }
 
 
-function weatherSearch(event){
-event.preventDefault();
+function searchBar(event){
+    event.preventDefault();
+    var searchNameVal = ""
+    weatherSearch(searchNameVal)
+}
+
+function weatherSearch(){
+
 
 var searchNameVal = $("#searchName")[0].value;
 
@@ -153,20 +160,52 @@ if(!searchNameVal){
     console.error('input needed');
     return;
 }
-
+saveSearch(searchNameVal)
 apiSearch(searchNameVal)
 }
 
 
+var searchedArray = []
+
+function saveSearch(searchNameVal){
+  
+    searchedArray.push(searchNameVal) 
+
+    cityList.append($("<button></button>", {"id": "unsaved" + cityList[0].childElementCount,"class": "d-block bg-primary text-light rounded"}).append(searchNameVal))
+        console.log(cityList)
+                $("#unsaved" + cityList[0].childElementCount).on('click', function(){
+                    console.log("hello")
+                    searchNameVal = $(this)[0].textContent
+                       weatherSearch(searchNameVal)
+                })
+    localStorage.setItem("searchedArray", JSON.stringify(searchedArray))
+
     
-function saveSearch(){
-    
+    console.log(searchedCities)
 }
 
+function init(){
+    var savedCities = JSON.parse(localStorage.getItem("searchedArray"))    
+    var searchNameVal = ""
+        if(savedCities.length > 0){
+            if(searchedCities[0].childElementCount === 1){
+            
+                
+                for(var i = 0; i < savedCities.length; i++){
+                    cityList.append($("<button></button>", {"id": "selected" + [i], "class": " d-block bg-primary text-light rounded"}).append(savedCities[i]))
+                    $("#selected" + i).on('click', function(){
+                        
+                       searchNameVal = $(this)[0].textContent
+                       weatherSearch(searchNameVal)
+    })
+                }}
+        }else{
+            return}
+        }
 
+searchBtn.on('submit', searchBar) 
+init()
 
-
-searchBtn.on('submit', weatherSearch)
 
 
 

@@ -8,6 +8,7 @@
     rel="stylesheet" 
     integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" 
     crossorigin="anonymous">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 
@@ -27,7 +28,7 @@
                     <button >Search</button>
                 </form>
                 <div id="searchedCities">
-                    <ul></ul>
+                    <div id="cityList"></div>
                 </div>
             </div>
         </aside>
@@ -35,11 +36,11 @@
         <main class="col-9">
             <Div id="selectedCity" class="border">
                 <h1 id="cityName">Search a city</h1>
-                <h1 id="temp">place holder</h1>
+                <h1 id="temp"></h1>
                 <h3 id="windSpeed"></h3>
                 <h3 id="humidity"></h3>
             </Div>
-            <div id="fiveDay" class="row">
+            <div id="fiveDay" class="row d-none">
                 <h2>5-Day Forecast:</h2>
                 <div id="dayOneForecast" class="col-2 bg-primary text-light rounded m-3">
                     <h2 id="dayOneDate"> </h2>
@@ -87,6 +88,7 @@
     integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" 
     crossorigin="anonymous">
     </script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <script src="./assets/js/script.js"></script>
 </body>
 </html>
